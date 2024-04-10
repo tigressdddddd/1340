@@ -27,64 +27,64 @@ void DisplayBoard()
 				break;
 				
 			case 2:
-				printf("┓");
+				cout << "┓";
 				break;
 				
 			case 3:
-				printf("┛");
+				cout << "┛";
 				break;
 				
 			case 4:
-				printf("┗");
+				cout << "┗";
 				break;
 				
 			case 5:
-				printf("┠");
+				cout << "┠";
 				break;
 				
 			case 6:
-				printf("┯");
+				cout << "┯";
 				break;
 				
 			case 7:
-				printf("┨");
+				cout << "┨";
 				break;
 				
 			case 8:
-				printf("┷");
+				cout << "┷";
 				break;
 				
 			case 9:
-				printf("┼");
+				cout << "┼";
 				break;
 				
 			case BLACKtem:      //black chess; last step
-				printf("▲");
+				cout << "▲";
 				break;
 				
 			case WHITEtem:      //white chess; last step
-				printf("△");
+				cout << "△";
 				break;
 				
 			case BLACK:      //black chess, current
-				printf("●");
+				cout << "●";
 				break;
 				
 			case WHITE:
-				printf("○");  //white chess, current
+				cout << "○";  //white chess, current
 				break;
 			}
 			if(i == SIZE - 1)
 			{
-				printf("\n");
+				cout <<endl;
 			}
 			
 		}
 	}
 	
-	printf("   ");
+	cout << "   ";
 	for (ary = 'A'; ary < 'A' + SIZE ; ary++)
-		printf("%c ",ary);
+		cout << ary << " ";
 	
-	printf("\n");
+	cout << endl;
 }
