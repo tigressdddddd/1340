@@ -76,7 +76,7 @@ void DisplayBoard()
 			}
 			if(i == SIZE - 1)
 			{
-				cout <<endl;
+				cout << "\n";
 			}
 			
 		}
