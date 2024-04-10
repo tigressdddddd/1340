@@ -232,7 +232,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // score particular po
 
 int LineState(int *pLineArray) 						//Process the chess pattern into the desired form 
 {	
-	ChangeLine(pLineArray); //把棋型处理成需要的形式 
+	ChangeLine(pLineArray); // turn chesspiece into needed format
 	
 	int u = 8, l = 0, i, j, flag, side = *(pLineArray + 4);
 	
