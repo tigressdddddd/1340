@@ -3,16 +3,16 @@
 
 
 
-void MoveP(int *pBoard, int piece)	// 人落子 
+void MoveP(int *pBoard, int piece)	// player move 
 {	
 	char cY, c;
 	int iX;
 	int iValue; 
 	
-	// 获取落子位置并检查输入格式是否合法 
-	printf("请输入落子位置(字母+数字):");
+	// Gets the drop position and checks if the input format is valid 
+	cout << "Please enter the position to place the chess (letter + number):";
 	while((c = getchar()) != '\n');
-	scanf("%c%d", &cY, &iX);
+	cin >> cY >> iX;
 	
 	if((cY >= 'A' && cY <= 'O') && (iX >= 1 && iX <= 15))
 	{
@@ -21,33 +21,33 @@ void MoveP(int *pBoard, int piece)	// 人落子
 	} 
 	else 
 	{
-		printf("输入格式有误，请重新输入位置：");
+		cout << "The input format is incorrect. Please re-enter the position: ";
 		getchar();
 		MoveP(pBoard, piece);
 		return; 
 	}
 	
-	//检查这个位置是否已有棋子 
+	//Check if there are any pieces in this position
 	iValue = *(pBoard + 15 * Posi[0] + Posi[1]); 
 	if(iValue == BLACK || iValue == WHITE || iValue == BLACKtem || iValue == WHITEtem)
 	{
-		printf("这个位置已经有棋子，请重新输入位置：");
+		cout << "There are already pieces in this position, please re-enter the position: ";
 		MoveP(pBoard, piece);
 		return;
 	}	
 
-	// 落子
+	// place the chess
 	*(pBoard + 15 * Posi[0] + Posi[1]) = piece;
 } 
 
 
-void MoveAi(int side)	// ai落子 
+void MoveAi(int side)	// AI move 
 {
 	int i, j;
 	int x_b, y_b, x_w, y_w;
 	int val_b = -1, val_w = -1;
 	
-	// 寻找两种棋子各自的最高分 
+	// Find the highest score for each two pieces 
 	for(i = 0; i < 15; i++)
 		for(j = 0; j < 15; j++)
 		{
@@ -64,7 +64,8 @@ void MoveAi(int side)	// ai落子
 				y_w = j;
 			}
 		}
-	// 根据分值决定进攻或防守 
+	
+	// decide to attack or defense depending on the corresponding score 
 	if(val_b >= val_w)
 	{
 		for(i = 0; i < 15; i++)
