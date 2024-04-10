@@ -2,16 +2,16 @@
 # include "gobang.h"
 
 
-void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// 更新分数板 
+void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// refresh score board 
 {
 	int i;
 	
-	//落子位置值为-1 
+	//the positon to place the chess is -1 
 	ScoreBoard_b[x][y] = -1;
 	ScoreBoard_w[x][y] = -1;
 	
-	//对2种棋子4个方向临近4格之内的32个位置共64个值重新评分 
-	//竖 
+	//Re-score total 64 values in 32 positions within 4 squares in 4 directions of 2 kinds of chess pieces
+	//verticle
 	for(i=0; i<9; i++)
 	{
 		if(x-4+i < 0 || x-4+i > 14 || i == 4) continue;
@@ -22,7 +22,7 @@ void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// 更新分数板
 		}
 	}
 	
-	//左下-右上
+	//anti=diagonal
 	for(i=0; i<9; i++)
 	{
 		if(x-4+i < 0 || x-4+i > 14 || y+4-i < 0 || y+4-i > 14 || i == 4) continue;
@@ -33,7 +33,7 @@ void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// 更新分数板
 		}
 	}
 	
-	//横
+	//horizontal
 	for(i=0; i<9; i++)
 	{
 		if(y+4-i < 0 || y+4-i > 14 || i == 4) continue;
@@ -44,7 +44,7 @@ void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// 更新分数板
 		}
 	}
 	
-	//左上-右下 
+	//diagonal 
 	for(i=0; i<9; i++)
 	{
 		if(x-4+i < 0 || x-4+i > 14 || y-4+i < 0 || y-4+i > 14 || i == 4) continue;
@@ -57,19 +57,19 @@ void ChangeScoreBoard(int x, int y, int (*pBoard)[15])	// 更新分数板
 }
 
 
-void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分 
+void ScorePosi(int x, int y, int (*pBoard)[15], int side) // score particular position
 {	
 	int i, j, flag_b, flag_w;
 	
-	// 判定位置是否是合法的落子位置 
+	// Determines if the position is legal  
 	if(ScoreBoard_b[x][y] == -1 || ScoreBoard_w[x][y] == -1) return;
 	
-	//获取4个方向的临近的棋盘数据，利用LineState判定棋型，结果记录在LineStateRecord中 
-	//横
+	//Obtain the data of the adjacent board in 4 directions, use LineState to determine the pattern, and record the result in LineStateRecord 
+        //horizontal
 	for(i=0; i<=9; i++)
 	{
-		if(x-4+i < 0 || x-4+i > 14) LineArray[i] = op(side);	// 超出棋盘边界的认为是对方棋子 
-		else if(i == 4) LineArray[i] = side;					// 中心位置预设为自己的棋子（实际上没有棋子） 
+		if(x-4+i < 0 || x-4+i > 14) LineArray[i] = op(side);	// Any piece that goes beyond the boundaries of the board is considered an opposing piece
+		else if(i == 4) LineArray[i] = side;			// Center position preset as own piece (actually there is no piece) 
 		else
 		{
 			LineArray[i] = pBoard[15*(x-4+i)][y] ;
@@ -77,7 +77,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 	}
 	LineStateRecord[LineState(LineArray)] += 1;
 	
-	//左下-右上
+	//anti-diagonal
 	for(i=0; i<=9; i++)
 	{
 		if(x-4+i < 0 || x-4+i > 14 || y+4-i < 0 || y+4-i > 14) LineArray[i] = op(side);
@@ -89,7 +89,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 	}
 	LineStateRecord[LineState(LineArray)] += 1;
 	
-	//竖
+	//verticle
 	for(i=0; i<=9; i++)
 	{
 		if(y+4-i < 0 || y+4-i > 14) LineArray[i] = op(side);
@@ -101,7 +101,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 	}
 	LineStateRecord[LineState(LineArray)] += 1;
 	
-	//左上-右下 
+	//diagonal 
 	for(i=0; i<=9; i++)
 	{
 		if(x-4+i < 0 || x-4+i > 14 || y-4+i < 0 || y-4+i > 14) LineArray[i] = op(side);
@@ -114,15 +114,15 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 	LineStateRecord[LineState(LineArray)] += 1;
 	
 	
-	//根据得到的棋型数据进行估值
+	//According to the obtained chess type data, estimate the possible value
 	int score = 0;
 	if(side == BLACK || side == BLACKtem)
 	{
-		//禁手位置评分为-2 
+		//a restricted move scores is -2
 		if(LineStateRecord[CL] && !LineStateRecord[L5]) score = -2; 
 		else if(LineStateRecord[L3] >= 2 && !LineStateRecord[L5]) score = -2;
 		else if((LineStateRecord[L4] + LineStateRecord[S4] >= 2) && !LineStateRecord[L5]) score = -2;
-		// 越强大的棋型分值越高，自己的同等棋型比对方的同等棋型分值高，非必须防守的对方棋型分值较低 
+		// stronger move has higher score, if same chess type, your own moves have higher score than the opponent's move, the opponent move thet does not have to defend has lower score
 		else if(side_p == BLACK)
 		{
 			score += LineStateRecord[L5] * 400000;
@@ -150,7 +150,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 			score += LineStateRecord[S3] * 100;
 			score += LineStateRecord[S2] * 50;
 			score += LineStateRecord[NTH] * 20;
-			// 相邻的棋子会加减分，这是因为我们更倾向于选择连子而非跳子	
+			// Adjacent pieces add or subtract points because we tend to choose lines over hops	
 			flag_b = 0; flag_w = 0;
 			for(i = x - 1; i <= x + 1; i++)
 			{
@@ -222,7 +222,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 		ScoreBoard_w[x][y] = score;
 	} 
 	
-	//把记录棋型的数组清空
+	// Clear the array that records chess patterns
 	for(i = 0; i <= 8; i++)
 	{
 		LineStateRecord[i] = 0;
@@ -230,14 +230,14 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // 对特定位置打分
 }
 
 
-int LineState(int *pLineArray) 						//判定某一方向上的棋型 
+int LineState(int *pLineArray) 						//Process the chess pattern into the desired form 
 {	
-	ChangeLine(pLineArray); //把棋型处理成需要的形式 
+	ChangeLine(pLineArray); //鎶婃鍨嬪鐞嗘垚闇�瑕佺殑褰㈠紡 
 	
 	int u = 8, l = 0, i, j, flag, side = *(pLineArray + 4);
 	
-	//u和l是判定区间的上下界 （对方棋子和连续空位是边界，边界外不需要判断） 
-	//对方棋子边界 
+	//u and l are the upper and lower bounds of the interval for judging (opponent's chess piece and continue empty spaces are the boundaries, no need to consider situations beyond the boundaries). 
+        //opposite chess piece boundary
 	for(i = 3; i >= 0; i--)
 		if(*(pLineArray + i) == op(side))
 		{
@@ -250,7 +250,7 @@ int LineState(int *pLineArray) 						//判定某一方向上的棋型
 			u = i;
 			break;
 		}
-	//连续空位边界 
+	//continue empty spaces boundary
 	flag = 0;
 	for(i = 3; i >= 0; i--)
 	{
@@ -278,15 +278,15 @@ int LineState(int *pLineArray) 						//判定某一方向上的棋型
 		}
 	}
 
-	//对于边界内的棋型进行判定，输出最强力的棋型 
-	// 判定顺序由强到弱 
+	//To determine the moves within the boundary, output the most powerful moves
+	//from strong to weak 
 	int cnt, cnt_max, sum;
 	int flag_l, flag_u;
 	
 	flag_l = l; flag_u = u;
 	cnt = 0; cnt_max = 0;
 
-	for(i = l; i <= u; i++)		//获取最大的连续棋子数 cnt_max 
+	for(i = l; i <= u; i++)		//Gets the maximum number of continuous pieces cnt_max 
 	{
 		if(*(pLineArray + i) == side) cnt += 1;
 		else 
@@ -306,7 +306,8 @@ int LineState(int *pLineArray) 						//判定某一方向上的棋型
 	// -oooo-
 	if(cnt_max == 4)		
 	{
-		if(*(pLineArray + flag_l) + *(pLineArray + flag_u) == 0) return L4;	// 根据边界判定棋型是活还是眠 
+		if(*(pLineArray + flag_l) + *(pLineArray + flag_u) == 0) return L4;	// Determine whether the chess type is alive or not according to the boundary
+	}
 	}
 	// -ooo-
 	if(cnt_max == 3)
@@ -319,7 +320,7 @@ int LineState(int *pLineArray) 						//判定某一方向上的棋型
 		if(*(pLineArray + flag_l) + *(pLineArray + flag_u) == op(side)) return S4;
 	}
 	// ooo-o & oo-oo
-	if(u - l + 1 >= 5)	//判定跳棋型 
+	if(u - l + 1 >= 5)	//Determine the jump type 
 	{	
 		for(i = l; i <= u - 4; i++)
 		{
@@ -368,10 +369,10 @@ int LineState(int *pLineArray) 						//判定某一方向上的棋型
 }
 
 
-void ChangeLine(int *pLineArray)	//把棋型处理成需要的形式 
+void ChangeLine(int *pLineArray)	//process the chess pattern to desired form 
 {
 	int i;
-	//修改tem，无棋子处为0 
+	//modify tem锛宲ositions with no chess pieces are 0 
 	for(i = 0; i < 9; i++)
 	{
 		if(*(pLineArray + i) == BLACKtem) *(pLineArray + i) = BLACK;
