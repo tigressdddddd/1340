@@ -68,11 +68,11 @@ void PrintBoardArray(int *pBoard)
 {
 	int i;
 	
-	printf("\n");
+	cout << endl;
 	for(i = 0; i < SIZE * SIZE; i++)
 	{
-		printf("%d\t", *(pBoard + i));
-		if(i % 15 == 14) printf("\n");
+		cout << *(pBoard + i) << "\t";
+		if(i % 15 == 14) cout << endl;
 	}
 }
 
