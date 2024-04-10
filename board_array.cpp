@@ -1,15 +1,15 @@
 # include <iostream>
 # include "gobang.h"
 
-int Board[SIZE][SIZE];       	// ÆåÅÌ 
-int ScoreBoard_b[SIZE][SIZE];	// ºÚ×Ó¼Æ·Ö°å 
-int ScoreBoard_w[SIZE][SIZE];	// °××Ó¼Æ·Ö°å 
+int Board[SIZE][SIZE];       	// æ£‹ç›˜ 
+int ScoreBoard_b[SIZE][SIZE];	// é»‘å­è®¡åˆ†æ¿ 
+int ScoreBoard_w[SIZE][SIZE];	// ç™½å­è®¡åˆ†æ¿ 
 
-int mode; 						//0ÎªÈËÈË¶ÔÕ½£¬1ÎªÈË»ú¶ÔÕ½ 
-int side_p, side_ai;			// ¼ÇÂ¼Ñ¡±ßÇé¿ö 
-int Posi[2];					// ¼ÇÂ¼Âä×ÓÎ»ÖÃ 
-int LineArray[9];				// ¼ÇÂ¼µ¥Ò»·½ÏòµÄÂä×ÓÇé¿ö 
-int LineStateRecord[9];			// ¼ÇÂ¼Ä³Ò»Î»ÖÃ¿ÉÄÜĞÎ³ÉµÄÆåĞÍ£¬Ë÷Òı¶ÔÓ¦×ÅÆåĞÍ£¨¼ûºê£© 
+int mode; 						//0ä¸ºäººäººå¯¹æˆ˜ï¼Œ1ä¸ºäººæœºå¯¹æˆ˜ 
+int side_p, side_ai;			// è®°å½•é€‰è¾¹æƒ…å†µ 
+int Posi[2];					// è®°å½•è½å­ä½ç½® 
+int LineArray[9];				// è®°å½•å•ä¸€æ–¹å‘çš„è½å­æƒ…å†µ 
+int LineStateRecord[9];			// è®°å½•æŸä¸€ä½ç½®å¯èƒ½å½¢æˆçš„æ£‹å‹ï¼Œç´¢å¼•å¯¹åº”ç€æ£‹å‹ï¼ˆè§å®ï¼‰ 
 
 
 
@@ -17,7 +17,7 @@ void InitBoardArray()
 {
 	int i, j, k; 
 	
-	//³õÊ¼»¯Board 
+	//Initialize Board 
 	Board[0][0] = 1;
 	Board[0][SIZE - 1] = 2;
 	Board[SIZE - 1][SIZE - 1] = 3;
@@ -51,7 +51,7 @@ void InitBoardArray()
 		}
 	}
 	
-	//³õÊ¼»¯ScoreBoard 
+	//Initialize ScoreBoard 
 	for(k = 0; k <= (SIZE + 1) / 2; k++)
 		for(i = k; i < SIZE - k; i++)
 			for(j = k; j < SIZE - k; j++)
