@@ -8,34 +8,34 @@ int judge(int x, int y)
 	int i, a, b;
 	int type;
 	
-	//确定落子的一方 
+	//identify whose turn is it
 	if(Board[x][y] == BLACKtem)
 	{
 		type = BLACK;
-		if(RestrictedMove(x, y)) return -1;	//禁手判定 
+		if(RestrictedMove(x, y)) return -1;	//绂佹墜鍒ゅ畾 
 	} 
 	else type = WHITE;
 	
 	
-	//横
+	//horizontal
 	for(i=1, a=0; ; i++, a++)
 		if(x-i < 0 || Board[x-i][y] != type) break;
 	for(i=1, b=0; ; i++, b++)
 		if(x+i > 14 || Board[x+i][y] != type) break;
 	if(a+b >= 4) return type;
-	//竖 
+	//vertical
 	for(i=1, a=0; ; i++, a++)
 		if(y-i < 0 || Board[x][y-i] != type) break;
 	for(i=1, b=0; ; i++, b++)
 		if(y+i > 14 || Board[x][y+i] != type) break;
 	if(a+b >= 4) return type;
-	//左上-右下
+	//diagonal
 	for(i=1, a=0; ; i++, a++)
 		if(x-i < 0 || y-i < 0 || Board[x-i][y-i] != type) break;
 	for(i=1, b=0; ; i++, b++)
 		if(x+i > 14 || y+i > 14 || Board[x+i][y+i] != type) break;
 	if(a+b >= 4) return type;
-	//左下-右上
+	//anti-diagonal
 	for(i=1, a=0; ; i++, a++)
 		if(x+i > 14 || y-i < 0 || Board[x+i][y-i] != type) break;
 	for(i=1, b=0; ; i++, b++)
@@ -49,7 +49,7 @@ int judge(int x, int y)
 void ChooseMode()
 {	
 	char s[2];
-	printf("请选择模式为\"人人对战\"(p)或\"人机对战\"(a):");
+	cout << "Please select Mode \" Player vs Player \"(p) or \" Man versus Machine \"(a):" << endl;
 	scanf("%s", &s);
 	if(s[0] == 'p')
 		mode = 0;
@@ -57,7 +57,7 @@ void ChooseMode()
 		mode = 1;
 	else
 	{
-		printf("\n请输入字母 p 或 a.");
+		cout << "\nplease type in letter p or  a." << endl;
 		ChooseMode();
 	}
 } 
@@ -66,7 +66,7 @@ void ChooseMode()
 void ChooseSide()
 {	
 	char s[2];
-	printf("请选择先手黑子(b)或后手白子(w):");
+	cout << "Please choose whether to play as black (b) or white (w):";
 	scanf("%s", &s);
 	if(s[0] == 'b')
 	{
@@ -80,13 +80,13 @@ void ChooseSide()
 	} 
 	else
 	{
-		printf("\n请输入字母 b 或 w.");
+		cout << "\nPlease type in b or w.";
 		ChooseSide();
 	}
 }
 
 
-int RestrictedMove(int x, int y)	//判断是否为禁手
+int RestrictedMove(int x, int y)	//determine whether it is a restricted move
 {	
 	if(ScoreBoard_b[x][y] == -2) return 1;
 	else return 0;
