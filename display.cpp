@@ -7,12 +7,12 @@ using namespace std;
 
 void DisplayBoard() 
 {	
-	//œ‘ æ∆Â≈Ã
+	//show the chessboard
 	int i, j;
 	char line;
 	char ary;
 	
-	system("cls");   //«Â∆¡
+	system("cls");   //clear screen
 
 	for(j = 0,line = 15; j <= SIZE - 1; j++)
 	{
@@ -23,55 +23,55 @@ void DisplayBoard()
 			switch(Board[j][i])
 			{
 			case 1:
-				cout <<"©≥";
+				cout <<"‚îè";
 				break;
 				
 			case 2:
-				printf("©∑");
+				printf("‚îì");
 				break;
 				
 			case 3:
-				printf("©ø");
+				printf("‚îõ");
 				break;
 				
 			case 4:
-				printf("©ª");
+				printf("‚îó");
 				break;
 				
 			case 5:
-				printf("©ƒ");
+				printf("‚î†");
 				break;
 				
 			case 6:
-				printf("©”");
+				printf("‚îØ");
 				break;
 				
 			case 7:
-				printf("©Ã");
+				printf("‚î®");
 				break;
 				
 			case 8:
-				printf("©€");
+				printf("‚î∑");
 				break;
 				
 			case 9:
-				printf("©‡");
+				printf("‚îº");
 				break;
 				
-			case BLACKtem:      // ∫⁄◊”…œ“ª≤Ω
-				printf("°¯");
+			case BLACKtem:      //black chess; last step
+				printf("‚ñ≤");
 				break;
 				
-			case WHITEtem:      //∞◊◊”…œ“ª≤Ω
-				printf("°˜");
+			case WHITEtem:      //white chess; last step
+				printf("‚ñ≥");
 				break;
 				
-			case BLACK:      //∫⁄◊”Õ®≥£
-				printf("°Ò");
+			case BLACK:      //black chess, current
+				printf("‚óè");
 				break;
 				
 			case WHITE:
-				printf("°");  //∞◊◊”Õ®≥£
+				printf("‚óã");  //white chess, current
 				break;
 			}
 			if(i == SIZE - 1)
@@ -88,4 +88,3 @@ void DisplayBoard()
 	
 	printf("\n");
 }
-//ø…“‘Ω‚ Õ“ªœ¬’‚∏ˆŒÂ◊”∆Âµƒ¥˙¬Î¬
