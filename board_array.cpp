@@ -1,15 +1,15 @@
 # include <iostream>
 # include "gobang.h"
 
-int Board[SIZE][SIZE];       	// 棋盘 
-int ScoreBoard_b[SIZE][SIZE];	// 黑子计分板 
-int ScoreBoard_w[SIZE][SIZE];	// 白子计分板 
+int Board[SIZE][SIZE];       	// chessboard
+int ScoreBoard_b[SIZE][SIZE];	// the scoreboard of black chess   
+int ScoreBoard_w[SIZE][SIZE];	// the scoreboard of white chess
 
-int mode; 						//0为人人对战，1为人机对战 
-int side_p, side_ai;			// 记录选边情况 
-int Posi[2];					// 记录落子位置 
-int LineArray[9];				// 记录单一方向的落子情况 
-int LineStateRecord[9];			// 记录某一位置可能形成的棋型，索引对应着棋型（见宏） 
+int mode; 						//mode 0: man vs man, mode 1: man vs machine 
+int side_p, side_ai;			// record which side you choose 
+int Posi[2];					// record the place where you drop the chess piece
+int LineArray[9];				// record the dropping chess of a single side 
+int LineStateRecord[9];			// Records possible moves in a position, with indexes corresponding to moves (see macro) 
 
 
 
