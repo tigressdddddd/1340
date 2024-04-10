@@ -12,7 +12,7 @@ int judge(int x, int y)
 	if(Board[x][y] == BLACKtem)
 	{
 		type = BLACK;
-		if(RestrictedMove(x, y)) return -1;	//禁手判定 
+		if(RestrictedMove(x, y)) return -1;	//determine if it is a restricted move
 	} 
 	else type = WHITE;
 	
