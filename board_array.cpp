@@ -9,7 +9,7 @@ int mode; 						//mode 0: man vs man, mode 1: man vs machine
 int side_p, side_ai;			// record which side you choose 
 int Posi[2];					// record the place where you drop the chess piece
 int LineArray[9];				// record the dropping chess of a single side 
-int LineStateRecord[9];			// Records possible moves in a position, with indexes corresponding to moves (see macro) 
+int LineStateRecord[9];			// Records possible moves in a position, with indexes corresponding to moves
 
 
 
