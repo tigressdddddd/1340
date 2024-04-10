@@ -12,7 +12,7 @@ int main()
 	
 	ChooseMode();
 	
-	if(mode) // 人机对战 
+	if(mode) // man vs machine mode 
 	{
 		// initial 
 		InitBoardArray();
@@ -22,41 +22,41 @@ int main()
 		
 		while(side_p == BLACK)
 		{	
-			//黑子落子 
-			ChangeTemPieces(BLACKtem);		// 改变tem棋子 
-			MoveP(&Board[0][0], BLACKtem);	// 落子 
-			x = Posi[0];					// 记录落子位置 
+			//black piece move
+			ChangeTemPieces(BLACKtem);		// change tem chess piece  
+			MoveP(&Board[0][0], BLACKtem);	// drop a chess piece 
+			x = Posi[0];			// record the position of dropping chess piece
 			y = Posi[1];
-			if(judge(x, y) == -1)			// 禁手判定 
+			if(judge(x, y) == -1)			// determine  restricted move 
 			{
-				printf("禁手！");
+				cout << "Restricted move!" << endl;
 				break;   
 			}
-			ChangeScoreBoard(x, y, Board);	// 更新计分板 
-			DisplayBoard();					// 打印棋盘 
-			if(judge(x, y) == BLACK)		// 胜利判定 
+			ChangeScoreBoard(x, y, Board);	// refresh the scoreboard 
+			DisplayBoard();			// print chessboard  
+			if(judge(x, y) == BLACK)	// determine winning or not 
 			{
-				printf("黑子获胜！");
+				cout << "Black win!" << endl;
 				break; 
 			}
-			//白子落子 
+			//white piece move 
 			ChangeTemPieces(WHITEtem);
 			MoveAi(WHITEtem);
 			x = Posi[0];
 			y = Posi[1];
 			ChangeScoreBoard(Posi[0], Posi[1], Board);
 			DisplayBoard();
-			printf("落子于%c%d.\n", y + 'A', 15 - x);
+			cout << "drop chess piece at" << char(y + 'A') << 15 - x << "." << endl;
 			if(judge(x, y) == WHITE)
 			{
-				printf("白子获胜！");
+				cout << "White win!" << endl;
 				break; 
 			}
 		}
 		
 		while(side_p == WHITE)
 		{
-			//黑子落子 
+			//black piece move
 			ChangeTemPieces(BLACKtem);
 			MoveAi(BLACKtem);
 			x = Posi[0];
@@ -64,13 +64,13 @@ int main()
 			ChangeScoreBoard(Posi[0], Posi[1], Board);
 			DisplayBoard();
 	
-			printf("落子于%c%d.\n", y + 'A', 15 - x); 
+			cout << "drop chess piece at" << char(y + 'A') << 15 - x << "." << endl; 
 			if(judge(x, y) == BLACK)
 			{
-				printf("黑子获胜！");
+				cout << "Black win!" << endl;
 				break; 
 			}
-			//白子落子 
+			//white piece move 
 			ChangeTemPieces(WHITEtem);
 			MoveP(&Board[0][0], WHITEtem);
 			x = Posi[0];
@@ -79,13 +79,13 @@ int main()
 			DisplayBoard();
 			if(judge(x, y) == WHITE)
 			{
-				printf("白子获胜！");
+				cout << "White win!" << endl;
 				break; 
 			}
 		}	
 	}
 	
-	else // 人人对战 
+	else //man vs man 
 	{
 		int i;
 		
@@ -94,38 +94,38 @@ int main()
 		
 		while(1)
 		{
-			// 黑子落子 
+			// Black piece move 
 			ChangeTemPieces(BLACKtem);
 			MoveP(&Board[0][0], BLACKtem);
 			x = Posi[0];
 			y = Posi[1];
 			if(judge(x, y) == -1)
 			{
-				printf("禁手！");
+				cout << "Restricted move!" << endl;
 				break;   
 			}
 			ChangeScoreBoard(x, y, Board);
 			DisplayBoard();
 			if(judge(x, y) == BLACK)
 			{
-				printf("黑子获胜！");
+				cout << "Restricted move!" << endl;
 				break; 
 			}
 			
-			//白子落子 
+			//White piece move
 			ChangeTemPieces(WHITEtem);
 			MoveP(&Board[0][0], WHITEtem);
 			ChangeScoreBoard(Posi[0], Posi[1], Board);
 			DisplayBoard();
 			if(judge(x, y) == WHITE)
 			{
-				printf("白子获胜！");
+				cout << "White win!" << endl;
 				break; 
 			}	
 		}		
 	}
 	
-	while(1) //防止直接退出 
+	while(1) //Prevent direct exit
 	{	
 		x = getchar(); 
 		if(x == '0') break;
