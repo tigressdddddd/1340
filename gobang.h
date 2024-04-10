@@ -9,55 +9,55 @@ using namespace std;
 # define BLACK 20
 # define WHITE 21
 
-# define CL 0 	// ³¤Á¬ 
-# define L5 1 	// Á¬5 
-# define L4 2 	// »î4
-# define S4 3 	// ³å4
-# define L3 4 	// »î3
-# define S3 5 	// Ãß3
-# define L2 6 	// »î2 
-# define S2 7 	// Ãß2 
-# define NTH 8 	//¸½½üÓĞÆå×Ó 
+# define CL 0 	 
+# define L5 1 	
+# define L4 2 	
+# define S4 3 	
+# define L3 4 	
+# define S3 5 	
+# define L2 6 	
+# define S2 7 	
+# define NTH 8 	
 
-# define op(A) ((A == BLACK) ? WHITE : BLACK)  //×ª»» 
+# define op(A) ((A == BLACK) ? WHITE : BLACK)  
 # define max(A, B) (((A) > (B)) ? (A) : (B))
 # define min(A, B) (((A) < (B)) ? (A) : (B))
 
 
-extern int Board[SIZE][SIZE];       	// ÆåÅÌ 
-extern int ScoreBoard_b[SIZE][SIZE];	// ºÚ×Ó¼Æ·Ö°å 
-extern int ScoreBoard_w[SIZE][SIZE];	// °××Ó¼Æ·Ö°å 
+extern int Board[SIZE][SIZE];       	// chessboard
+extern int ScoreBoard_b[SIZE][SIZE];	// scoreboard for black piece
+extern int ScoreBoard_w[SIZE][SIZE];	// scoreboard for white piece 
 
-extern int mode; 						//0ÎªÈËÈË¶ÔÕ½£¬1ÎªÈË»ú¶ÔÕ½ 
-extern int side_p, side_ai;			// ¼ÇÂ¼Ñ¡±ßÇé¿ö 
-extern int Posi[2];					// ¼ÇÂ¼Âä×ÓÎ»ÖÃ 
-extern int LineArray[9];				// ¼ÇÂ¼µ¥Ò»·½ÏòµÄÂä×ÓÇé¿ö 
-extern int LineStateRecord[9];			// ¼ÇÂ¼Ä³Ò»Î»ÖÃ¿ÉÄÜĞÎ³ÉµÄÆåĞÍ£¬Ë÷Òı¶ÔÓ¦×ÅÆåĞÍ£¨¼ûºê£© 
+extern int mode; 						//0ä¸ºäººäººå¯¹æˆ˜ï¼Œ1ä¸ºäººæœºå¯¹æˆ˜ 
+extern int side_p, side_ai;			// è®°å½•é€‰è¾¹æƒ…å†µ 
+extern int Posi[2];					// è®°å½•è½å­ä½ç½® 
+extern int LineArray[9];				// è®°å½•å•ä¸€æ–¹å‘çš„è½å­æƒ…å†µ 
+extern int LineStateRecord[9];			// è®°å½•æŸä¸€ä½ç½®å¯èƒ½å½¢æˆçš„æ£‹å‹ï¼Œç´¢å¼•å¯¹åº”ç€æ£‹å‹ï¼ˆè§å®ï¼‰ 
 
 //display
 void DisplayBoard();
 
 //judge
-int judge(int x, int y); 		// ²ÃÅĞ £¬ÅĞ¶ÏÊ¤¸ººÍ½ûÊÖ 
-void ChooseMode(); 				// ÈËÈË»òÈË»ú 
-void ChooseSide();  			// Ñ¡±ß 
-int RestrictedMove(int x, int y); // ½ûÊÖÅĞ¶¨ 
+int judge(int x, int y); 		// è£åˆ¤ ï¼Œåˆ¤æ–­èƒœè´Ÿå’Œç¦æ‰‹ 
+void ChooseMode(); 				// äººäººæˆ–äººæœº 
+void ChooseSide();  			// é€‰è¾¹ 
+int RestrictedMove(int x, int y); // ç¦æ‰‹åˆ¤å®š 
 
 //move
-void MoveP(int *pBoard, int piece);	// ÈËÂä×Ó 
-void MoveAi(int piece); 			//aiÂä×Ó 
+void MoveP(int *pBoard, int piece);	// äººè½å­ 
+void MoveAi(int piece); 			//aiè½å­ 
 
 //score
-void ChangeScoreBoard(int x, int y, int (*pBoard)[15]); 		// ¸üĞÂ·ÖÊı°å 
-void ScorePosi(int x, int y, int (*pBoard)[15], int side); 	//¶ÔÌØ¶¨Î»ÖÃ´ò·Ö 
-int LineState(int *pLineArray); 						//Êä³öÒ»ĞĞÖĞ×îÇ¿µÄÆåĞÍ 
-void ChangeLine(int *pLineArray); 						//½«LineArray´¦Àí³ÉĞèÒªµÄĞÎÊ½ 
+void ChangeScoreBoard(int x, int y, int (*pBoard)[15]); 		// æ›´æ–°åˆ†æ•°æ¿ 
+void ScorePosi(int x, int y, int (*pBoard)[15], int side); 	//å¯¹ç‰¹å®šä½ç½®æ‰“åˆ† 
+int LineState(int *pLineArray); 						//è¾“å‡ºä¸€è¡Œä¸­æœ€å¼ºçš„æ£‹å‹ 
+void ChangeLine(int *pLineArray); 						//å°†LineArrayå¤„ç†æˆéœ€è¦çš„å½¢å¼ 
 
 
 //board_array
-void InitBoardArray();  			//³õÊ¼»¯¿ÕÆåÅÌ
-void ChangeTemPieces(int piece); 	//½«temÆå×Ó×ª»¯ÎªÕı³£Æå×Ó 
-void PrintBoardArray(int *pBoard); 	//ÓÃÓÚ²âÊÔ 
+void InitBoardArray();  			//åˆå§‹åŒ–ç©ºæ£‹ç›˜
+void ChangeTemPieces(int piece); 	//å°†temæ£‹å­è½¬åŒ–ä¸ºæ­£å¸¸æ£‹å­ 
+void PrintBoardArray(int *pBoard); 	//ç”¨äºæµ‹è¯• 
 
 
 
