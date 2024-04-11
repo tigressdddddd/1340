@@ -16,7 +16,7 @@ void DisplayBoard()
 
 	for(j = 0,line = 15; j <= SIZE - 1; j++)
 	{
-		cout << line << " ";
+		cout << setw(2) << line;;
 		line -= 1;
 		for(i = 0; i <= SIZE - 1; i++)
 		{
