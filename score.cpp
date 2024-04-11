@@ -72,7 +72,7 @@ void ScorePosi(int x, int y, int (*pBoard)[15], int side) // score particular po
 		else if(i == 4) LineArray[i] = side;			// Center position preset as own piece (actually there is no piece) 
 		else
 		{
-			LineArray[i] = pBoard[15*(x-4+i)][y] ;
+			LineArray[i] = pBoard[(x-4+i)][y] ;
 		}
 	}
 	LineStateRecord[LineState(LineArray)] += 1;
