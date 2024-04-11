@@ -9,14 +9,14 @@ void DisplayBoard()
 {	
 	//show the chessboard
 	int i, j;
-	char line;
+	int line;
 	char ary;
 	
 	system("cls");   //clear screen
 
 	for(j = 0,line = 15; j <= SIZE - 1; j++)
 	{
-		cout << line << " ";
+		cout << setw(2) << line;
 		line -= 1;
 		for(i = 0; i <= SIZE - 1; i++)
 		{
